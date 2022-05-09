@@ -1,0 +1,46 @@
+class GuessingGame
+
+  def initialize(min, max)
+    @min = min
+    @max = max
+    @target = nil
+    @guess = nil
+    @number_of_guesses = Math.log2(max - min).to_i + 1
+    @winner = nil
+  end
+
+  def play
+    @target = (@min..@max).to_a.sample
+    until @winner || @number_of_guesses == 0 do
+      get_choice
+      compare
+    end
+    puts "You have no more guesses.  You lost!" unless @winner
+  end
+
+  def compare
+    if @user_choice > @target
+      puts "Your guess is too high."
+    elsif @user_choice == @target
+      puts "That's the number!"
+      @winner = 1
+      puts "You won!"
+    else
+      puts "Your guess is too low."
+    end
+  end
+
+  def get_choice
+    puts "You have #{@number_of_guesses} guesses remaining."
+    loop do
+      puts "Enter a number between #{@min} and #{@max}:"
+      @user_choice = gets.chomp.to_i
+      break if @user_choice >= @min && @user_choice <= @max
+      puts "Invalid guess."
+    end
+    @number_of_guesses -= 1
+  end
+end
+
+game = GuessingGame.new(100, 200)
+game.play

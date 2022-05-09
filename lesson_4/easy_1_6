@@ -1,0 +1,10 @@
+class Cube
+  attr_reader :volume
+
+  def initialize(volume)
+    @volume = volume
+  end
+end
+
+my_cube = Cube.new(10)
+p my_cube.volume
